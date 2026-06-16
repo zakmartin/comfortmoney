@@ -113,13 +113,13 @@ const STORY_DISCLAIMER = `<p class="cm-disclaimer">${icon.info} Uvedené přípa
 const STORIES = [
   {
     name: 'Václav O.', loc: 'Beroun', product: 'Sloučení dluhů', href: '/konsolidace-zavazku/',
-    situation: 'Devět půjček a kreditních karet, dohromady 11 590 Kč měsíčně. Splátky přerůstaly přes hlavu a začínala dluhová spirála.',
+    situation: 'Devět půjček a kreditních karet, dohromady <strong>11 590 Kč měsíčně</strong>. Splátky přerůstaly přes hlavu a začínala dluhová spirála.',
     solution: 'Všechny závazky jsme sloučili do jedné splátky s delší splatností. Místo devíti termínů řeší jediný přehledný úvěr.',
     big: 'Ušetří 4 210 Kč měsíčně', sub: 'nová splátka 7 380 Kč místo 11 590 Kč',
   },
   {
     name: 'Aleš M.', loc: 'Zlín', product: 'Sloučení dluhů', href: '/konsolidace-zavazku/',
-    situation: 'Několik závazků za 16 400 Kč měsíčně, které postupně přestávaly být únosné.',
+    situation: 'Několik závazků za <strong>16 400 Kč měsíčně</strong>, které postupně přestávaly být únosné.',
     solution: 'Sloučili jsme je do úvěru zajištěného nemovitostí a prodloužili splatnost. O střechu nad hlavou nepřišel, slouží jen jako zajištění.',
     big: 'Ušetří 6 550 Kč měsíčně', sub: 'nová splátka 9 850 Kč a klid na rozpočet',
   },
@@ -215,7 +215,7 @@ const homeMain = `    <section class="cm-hero cm-hero--home" id="kalkulacka">
       </div>
     </section>
 
-    <section class="cm-section" id="reference">
+    <section class="cm-section" id="reference" style="padding-top:96px;border-top:1px solid var(--cm-line)">
       <div class="cm-container">
         <span class="cm-eyebrow">Příběhy klientů</span>
         <h2 class="cm-h2">Reálné situace, udržitelná řešení</h2>
