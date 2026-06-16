@@ -1,0 +1,407 @@
+/* Comfort Money – sdílený layout pro generátor stránek (tools/build.js).
+   Jeden zdroj pravdy pro <head>, navigaci, patičku a opakované sekce
+   (kalkulačka, kontaktní formulář, FAQ). Vše čeština, mobile-first, WCAG 2.1 AA. */
+'use strict';
+
+const SITE = 'https://www.comfortmoney.cz';
+/* build id pro cache-busting CSS/JS (mění se při každém generování) */
+const BUILD = Date.now();
+/* Klientský portál pro online žádost o úvěr. */
+const APPLY_URL = 'https://moje.comfortmoney.cz/?ga_id=530733030.1780995194&url=https%3A%2F%2Fwww.comfortmoney.cz%2F';
+
+/* Tlačítko „Podat žádost online“ → portál (otevře se v novém okně). */
+function applyBtn(cls, label) {
+  return `<a class="cm-btn ${cls || 'cm-btn--primary'}" href="${APPLY_URL}" target="_blank" rel="noopener">${label || 'Podat žádost online'}</a>`;
+}
+
+/* ---------- ikony (inline SVG, bez závislostí) ---------- */
+const icon = {
+  check: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  arrow: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  phone: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11 11 0 0 0 3.5.56 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.2.2 2.4.56 3.5a1 1 0 0 1-.24 1z" fill="currentColor"/></svg>',
+  info: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8h.01M11 12h1v4h1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+};
+
+/* ---------- NAVIGACE ---------- */
+function nav() {
+  return `<header class="cm-nav" data-open="false">
+    <div class="cm-container cm-nav__inner">
+      <div class="cm-nav__brand">
+        <a href="/" aria-label="Comfort Money – domů">
+          <img class="cm-nav__logo" src="/assets/logo-comfortmoney.png" alt="Comfort Money" width="280" height="48">
+        </a>
+      </div>
+      <nav class="cm-nav__links" aria-label="Hlavní navigace">
+        <div class="cm-nav__dd">
+          <a class="cm-nav__link cm-nav__dd-toggle" href="/" aria-haspopup="true">Půjčky
+            <svg class="cm-nav__chev" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="cm-nav__dd-menu" role="menu">
+            <a class="cm-nav__dd-item" role="menuitem" href="/konsolidace-zavazku/"><strong>Sloučení dluhů</strong><span>Více splátek do jedné nižší</span></a>
+            <a class="cm-nav__dd-item" role="menuitem" href="/zajisteny-uver/"><strong>Spotřebitelský úvěr</strong><span>100 000–10 mil. Kč, až 30 let</span></a>
+            <a class="cm-nav__dd-item" role="menuitem" href="/podnikatelsky-uver/"><strong>Podnikatelský úvěr</strong><span>Pro OSVČ a menší firmy</span></a>
+          </div>
+        </div>
+        <a class="cm-nav__link" href="/jak-to-funguje/">Jak to funguje</a>
+        <a class="cm-nav__link" href="/reference/">Reference</a>
+        <div class="cm-nav__dd">
+          <a class="cm-nav__link cm-nav__dd-toggle" href="/o-nas/" aria-haspopup="true">O nás
+            <svg class="cm-nav__chev" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="cm-nav__dd-menu" role="menu">
+            <a class="cm-nav__dd-item" role="menuitem" href="/o-nas/"><strong>O Comfort Money</strong><span>Mise, hodnoty a přístup</span></a>
+            <a class="cm-nav__dd-item" role="menuitem" href="/o-nas/kodex-a-hodnoty/"><strong>Etický kodex a hodnoty</strong><span>Principy, kterými se řídíme</span></a>
+            <a class="cm-nav__dd-item" role="menuitem" href="/informacni-memorandum-nebankovniho-registru-klientskych-informaci/"><strong>Informační memorandum NRKI</strong><span>Registr klientských informací</span></a>
+          </div>
+        </div>
+      </nav>
+      <div class="cm-nav__actions">
+        <a class="cm-nav__phone" href="tel:800314314">${icon.phone} 800 314 314</a>
+        <a class="cm-btn cm-btn--primary cm-nav__cta" href="${APPLY_URL}" target="_blank" rel="noopener">Podat žádost</a>
+        <button class="cm-nav__burger" type="button" aria-label="Otevřít menu" aria-expanded="false" aria-controls="cm-mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="cm-nav__mobile" id="cm-mobile-menu">
+      <span class="cm-nav__mobile-label">Půjčky</span>
+      <a href="/konsolidace-zavazku/">Sloučení dluhů</a>
+      <a href="/zajisteny-uver/">Spotřebitelský úvěr</a>
+      <a href="/podnikatelsky-uver/">Podnikatelský úvěr</a>
+      <a href="/jak-to-funguje/">Jak to funguje</a>
+      <a href="/reference/">Reference</a>
+      <span class="cm-nav__mobile-label">O nás</span>
+      <a href="/o-nas/">O Comfort Money</a>
+      <a href="/o-nas/kodex-a-hodnoty/">Etický kodex a hodnoty</a>
+      <a href="/informacni-memorandum-nebankovniho-registru-klientskych-informaci/">Informační memorandum NRKI</a>
+      <a class="cm-btn cm-btn--primary cm-btn--block" href="${APPLY_URL}" target="_blank" rel="noopener" style="margin-top:12px">Podat žádost online</a>
+      <a class="cm-btn cm-btn--ghost-dark cm-btn--block" href="/kontakt/" style="margin-top:8px">Nezávazná konzultace zdarma</a>
+    </div>
+  </header>`;
+}
+
+/* ---------- PATIČKA ---------- */
+function footer() {
+  return `<footer class="cm-footer">
+    <div class="cm-container">
+      <div class="cm-footer__grid">
+        <div>
+          <img class="cm-footer__logo" src="/assets/logo-comfortmoney.png" alt="Comfort Money" width="160" height="28">
+          <p class="cm-footer__about">Nebankovní poskytovatel úvěrů zajištěných nemovitostí s licencí ČNB. Pomáháme řešit složité finanční situace konsolidací závazků – férově a s individuálním přístupem.</p>
+        </div>
+        <div class="cm-footer__col">
+          <h3>Produkty</h3>
+          <a href="/konsolidace-zavazku/">Sloučení dluhů</a>
+          <a href="/zajisteny-uver/">Spotřebitelský úvěr</a>
+          <a href="/podnikatelsky-uver/">Podnikatelský úvěr</a>
+        </div>
+        <div class="cm-footer__col">
+          <h3>Společnost</h3>
+          <a href="/jak-to-funguje/">Jak to funguje</a>
+          <a href="/reference/">Reference</a>
+          <a href="/o-nas/">O nás</a>
+          <a href="/o-nas/kodex-a-hodnoty/">Etický kodex a hodnoty</a>
+          <a href="/kontakt/">Kontakt</a>
+        </div>
+        <div class="cm-footer__col">
+          <h3>Kontakt</h3>
+          <a href="tel:800314314">800 314 314 (klienti)</a>
+          <a href="tel:+420722659199">+420 722 659 199 (partneři)</a>
+          <a href="mailto:info@comfortmoney.cz">info@comfortmoney.cz</a>
+          <span>Po–Pá 9–17 · celá ČR</span>
+        </div>
+      </div>
+
+      <div class="cm-footer__legal">
+        <p><strong>Reprezentativní příklad (k revizi compliance):</strong> Úvěr 330 000 Kč, splatnost 48 měsíců, úroková sazba 18 % p.a., měsíční splátka 9 694 Kč, poplatek za sjednání 30 000 Kč, <strong>RPSN 26,2 %</strong>, celková splatná částka 465 312 Kč.</p>
+        <p style="margin-top:10px">Údaj „snížení měsíční splátky až o 60 %“ vyjadřuje snížení <em>měsíční</em> splátky, kterého lze dosáhnout i prodloužením doby splatnosti. Delší splatnost může zvýšit celkovou zaplacenou částku. Konkrétní hodnoty závisí na individuálním posouzení. <em>[Metodika k doložení – k revizi compliance.]</em></p>
+        <p style="margin-top:10px">Comfort Money s.r.o., Vinohradská 2828/151, 130 00 Praha 3, IČO 24209589, zapsaná u Městského soudu v Praze, oddíl C, vložka 188885. Orgán dohledu: Česká národní banka, Na Příkopě 28, 115 03 Praha 1 – dozor nad zákonem č. 257/2016 Sb. o spotřebitelském úvěru. Mimosoudní řešení sporů: finanční arbitr, Legerova 69, 110 00 Praha 1, finarbitr.cz. Naše oprávnění k činnosti lze ověřit přímo v registru ČNB. Neposkytujeme radu podle § 85 zákona č. 257/2016 Sb.</p>
+      </div>
+
+      <div class="cm-footer__bottom">
+        <span>© Comfort Money s.r.o., člen skupiny CFG</span>
+        <a href="/ochrana-osobnich-udaju/">Ochrana osobních údajů</a>
+        <a href="/ochrana-oznamovatelu/">Ochrana oznamovatelů</a>
+        <a href="/cookies/">Cookies</a>
+      </div>
+    </div>
+  </footer>`;
+}
+
+/* ---------- PLOVOUCÍ KONTAKT (vpravo dole) ----------
+   Světlá karta: telefon + „Zavolejte zpět“. Zobrazí se až po vyřízení cookies lišty. */
+function fab() {
+  return `<div class="cm-fab" id="cmFab" hidden>
+    <button class="cm-fab__toggle" type="button" id="cmFabToggle" aria-expanded="false" aria-controls="cmFabPanel" aria-label="Kontakt a zavolání zpět">
+      ${icon.phone}
+    </button>
+    <div class="cm-fab__panel" id="cmFabPanel" hidden>
+      <button class="cm-fab__close" type="button" id="cmFabClose" aria-label="Zavřít">&times;</button>
+      <p class="cm-fab__title">Jsme tu pro vás</p>
+      <a class="cm-fab__phone" href="tel:800314314">${icon.phone} 800 314 314</a>
+      <p class="cm-fab__hours">Po–Pá 9–17, celá ČR</p>
+      <a class="cm-btn cm-btn--primary cm-btn--block" href="/kontakt/">Zavolejte zpět</a>
+    </div>
+  </div>`;
+}
+
+/* ---------- COOKIES LIŠTA ---------- */
+function cookieBar() {
+  return `<div class="cm-cookies" id="cmCookies" hidden>
+    <p class="cm-cookies__text">Používáme nezbytné cookies pro fungování webu a po vašem souhlasu i analytické cookies, abychom web vylepšovali. Více v <a href="/cookies/">zásadách cookies</a>.</p>
+    <div class="cm-cookies__actions">
+      <button type="button" class="cm-btn cm-btn--ghost-dark" data-cookie="reject">Jen nezbytné</button>
+      <button type="button" class="cm-btn cm-btn--primary" data-cookie="accept">Přijmout vše</button>
+    </div>
+  </div>`;
+}
+
+/* ---------- KALKULAČKY (znovupoužitelné, prefix = namespace ID) ---------- */
+const TERM_OPTS = (sel) => ['3','5','10','15','20','25','30'].map((y) =>
+  `<option value="${y}"${y === sel ? ' selected' : ''}>${y === '3' ? '3 roky' : y + ' let'}</option>`).join('');
+const CALC_DISCLAIMER = `<p class="cm-calc__disclaimer">${icon.info} Orientační výpočet při modelové sazbě 18 % p.a. Delší splatnost snižuje měsíční splátku, ale může zvýšit celkově zaplacenou částku. Nejde o nabídku ani příslib schválení.</p>`;
+
+/* Sloučení dluhů: dluhy + současné splátky + splatnost → nová splátka + úspora */
+function consolidationCalc(p) {
+  p = p || 'calc';
+  return `<div class="cm-calc cm-calc--compact">
+        <div class="cm-calc__inputs">
+          <div class="cm-field">
+            <label for="${p}Debts">Celková výše vašich dluhů</label>
+            <div class="cm-amount"><input type="text" id="${p}Debts" inputmode="numeric" autocomplete="off" value="600 000"><span class="cm-amount__suf">Kč</span></div>
+          </div>
+          <div class="cm-field-row">
+            <div class="cm-field">
+              <label for="${p}Payment">Současné měsíční splátky</label>
+              <div class="cm-amount"><input type="text" id="${p}Payment" inputmode="numeric" autocomplete="off" value="14 000"><span class="cm-amount__suf">Kč</span></div>
+            </div>
+            <div class="cm-field">
+              <label for="${p}Term">Délka splatnosti</label>
+              <select id="${p}Term">${TERM_OPTS('20')}</select>
+            </div>
+          </div>
+        </div>
+        <div class="cm-calc__result" aria-live="polite">
+          <p class="cm-calc__result-label">Orientační splátka po sloučení dluhů</p>
+          <p class="cm-calc__result-num" id="${p}New">–</p>
+          <p class="cm-calc__saving" id="${p}Saving"></p>
+          ${applyBtn('cm-btn--primary cm-btn--block', 'Podat žádost online')}
+          ${CALC_DISCLAIMER}
+        </div>
+      </div>`;
+}
+
+/* Úvěr (spotřebitelský / podnikatelský): výše úvěru + splatnost → měsíční splátka + celkem */
+function loanCalc(p, opts) {
+  opts = opts || {};
+  const val = opts.value || '800 000';
+  return `<div class="cm-calc cm-calc--compact">
+        <div class="cm-calc__inputs">
+          <div class="cm-field">
+            <label for="${p}Amount">Výše úvěru</label>
+            <div class="cm-amount"><input type="text" id="${p}Amount" inputmode="numeric" autocomplete="off" value="${val}"><span class="cm-amount__suf">Kč</span></div>
+          </div>
+          <div class="cm-field">
+            <label for="${p}Term">Délka splatnosti</label>
+            <select id="${p}Term">${TERM_OPTS('15')}</select>
+          </div>
+        </div>
+        <div class="cm-calc__result" aria-live="polite">
+          <p class="cm-calc__result-label">Orientační měsíční splátka</p>
+          <p class="cm-calc__result-num" id="${p}Payment">–</p>
+          ${applyBtn('cm-btn--primary cm-btn--block', 'Podat žádost online')}
+          ${CALC_DISCLAIMER}
+        </div>
+      </div>`;
+}
+
+/* Tabová kalkulačka pro homepage hero (3 produkty, výchozí Sloučení dluhů) */
+function calcTabs() {
+  return `<div class="cm-calc-card cm-calctabs">
+      <div class="cm-calctabs__tabs" role="tablist" aria-label="Kalkulačky produktů">
+        <button type="button" class="cm-calctabs__tab is-active" data-tab="k" role="tab" aria-selected="true"
+          data-kicker="Sloučíme vaše dluhy do jedné nižší splátky"
+          data-title="Snižte si měsíční splátku až o &lt;em&gt;60&nbsp;%&lt;/em&gt;"
+          data-sub="Pomáháme i lidem, které banka odmítla. Férově a s individuálním přístupem a vše ZDARMA.">Sloučení dluhů</button>
+        <button type="button" class="cm-calctabs__tab" data-tab="s" role="tab" aria-selected="false"
+          data-kicker="Peníze na cokoli potřebujete řešit"
+          data-title="Spotřebitelský úvěr &lt;em&gt;až 10 mil. Kč&lt;/em&gt;"
+          data-sub="Úvěr zajištěný nemovitostí se splatností až 30 let. I pro situace, které banka odmítla.">Spotřebitelský úvěr</button>
+        <button type="button" class="cm-calctabs__tab" data-tab="p" role="tab" aria-selected="false"
+          data-kicker="Financování, na které banka nemá čas"
+          data-title="Podnikatelský úvěr &lt;em&gt;pro firmy&lt;/em&gt;"
+          data-sub="Pro OSVČ a menší firmy. Věcně, férově a s individuálním posouzením.">Podnikatelský úvěr</button>
+      </div>
+      <div class="cm-calctabs__panels">
+        <div class="cm-calctabs__panel" data-panel="k">${consolidationCalc('calc')}</div>
+        <div class="cm-calctabs__panel" data-panel="s" hidden>${loanCalc('loan')}</div>
+        <div class="cm-calctabs__panel" data-panel="p" hidden>${loanCalc('biz')}</div>
+      </div>
+    </div>`;
+}
+
+/* Jedna kalkulačka v kartě pro hero produktové stránky */
+function productCalcCard(type) {
+  if (type === 'konsolidace') return `<div class="cm-calc-card"><p class="cm-calc-card__title">Spočítejte si úsporu po sloučení dluhů</p>${consolidationCalc('calc')}</div>`;
+  if (type === 'spotrebitelsky') return `<div class="cm-calc-card"><p class="cm-calc-card__title">Spočítejte si splátku spotřebitelského úvěru</p>${loanCalc('loan')}</div>`;
+  return `<div class="cm-calc-card"><p class="cm-calc-card__title">Spočítejte si splátku podnikatelského úvěru</p>${loanCalc('biz')}</div>`;
+}
+
+/* ---------- SDÍLENÁ SEKCE: CITACE ZAKLADATELE / CEO ---------- */
+function ceoQuote() {
+  return `<section class="cm-section cm-section--surface">
+    <div class="cm-container">
+      <figure class="cm-quote">
+        <span class="cm-quote__mark" aria-hidden="true">&bdquo;</span>
+        <blockquote class="cm-quote__text"><span class="cm-quote__accent">Společnost Comfort Money</span> vznikla za účelem pomoci lidem, kteří to opravdu potřebují. Majorita našich klientů se shodou nešťastných událostí dostala do těžké situace a bankovní domy se k nim obrací zády.<br><br>My po pečlivé analýze klientovy situace nabídneme finanční čerpání v takové výši, jež v žádném případě nesmí zhoršit klientovu situaci. Na tom si zakládáme.</blockquote>
+        <figcaption class="cm-quote__by">
+          <span class="cm-quote__name">Ing. Petr Cimala</span>
+          <span class="cm-quote__role">člen vedení, Comfort Money s.r.o.</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>`;
+}
+
+/* ---------- SEKCE s kalkulačkou (pro stránky bez kalkulačky v heru) ---------- */
+function calcSection() {
+  return `<section class="cm-section cm-section--surface" id="kalkulacka">
+    <div class="cm-container cm-container--narrow">
+      <span class="cm-eyebrow">Kalkulačka</span>
+      <h2 class="cm-h2">Spočítejte si orientační splátku</h2>
+      <p class="cm-lead">Výpočet je orientační a nenahrazuje individuální posouzení.</p>
+      <div class="cm-calc-card" style="margin-top:32px">${consolidationCalc('calc')}</div>
+    </div>
+  </section>`;
+}
+
+/* ---------- SDÍLENÁ SEKCE: FAQ ----------
+   items = [{q, a}] */
+function faqSection(items, { title = 'Časté otázky', lead = 'Odpovídáme i na nepříjemné otázky – otevřeně.' } = {}) {
+  const rows = items.map((it) => `<details class="cm-faq__item">
+        <summary class="cm-faq__q">${it.q}</summary>
+        <div class="cm-faq__a">${it.a}</div>
+      </details>`).join('\n      ');
+  return `<section class="cm-section" id="faq">
+    <div class="cm-container cm-container--narrow">
+      <span class="cm-eyebrow">FAQ</span>
+      <h2 class="cm-h2">${title}</h2>
+      <p class="cm-lead">${lead}</p>
+      <div class="cm-faq" data-faq>
+      ${rows}
+      </div>
+    </div>
+  </section>`;
+}
+
+/* ---------- SDÍLENÁ SEKCE: KONTAKT + POPTÁVKOVÝ FORMULÁŘ ----------
+   product = předvolba (konsolidace | zajisteny-uver | podnikatelsky-uver | obecne) */
+function contactSection(product = 'obecne') {
+  return `<section class="cm-section cm-section--dark" id="kontakt">
+    <div class="cm-container">
+      <div class="cm-contact">
+        <div class="cm-contact__intro">
+          <span class="cm-eyebrow">Nezávazná konzultace zdarma</span>
+          <h2 class="cm-h2">Ozvěte se. Společně najdeme řešení.</h2>
+          <p class="cm-lead">Nechte nám kontakt a pár vět o své situaci. Ozveme se a navrhneme další krok, nezávazně.</p>
+          <ul class="cm-contact__points">
+            <li><span class="cm-check">${icon.check}</span> Posouzení zdarma a nezávazně</li>
+            <li><span class="cm-check">${icon.check}</span> Žádné odsuzování, jen férové řešení</li>
+            <li><span class="cm-check">${icon.check}</span> Pomůžeme i po odmítnutí bankou</li>
+          </ul>
+          <p class="cm-contact__phone">${icon.phone} <a href="tel:800314314">800 314 314</a> · Po–Pá 9–17</p>
+        </div>
+
+        <div class="cm-formcard">
+          <form id="leadForm" action="/api/lead" method="post" novalidate>
+            <input type="hidden" name="product" value="${product}">
+            <input type="hidden" name="calcContext" id="leadCalcContext" value="">
+            <!-- honeypot: skrytý, lidé nevyplní -->
+            <div class="cm-hp" aria-hidden="true">
+              <label for="lead-website">Nevyplňujte</label>
+              <input type="text" id="lead-website" name="website" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="cm-field">
+              <label for="lead-name">Jméno a příjmení <span class="cm-req">*</span></label>
+              <input type="text" id="lead-name" name="name" autocomplete="name" required>
+              <p class="cm-form-error" id="err-name"></p>
+            </div>
+            <div class="cm-field">
+              <label for="lead-phone">Telefon</label>
+              <input type="tel" id="lead-phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="+420 …">
+              <p class="cm-form-error" id="err-phone"></p>
+            </div>
+            <div class="cm-field">
+              <label for="lead-email">E-mail</label>
+              <input type="email" id="lead-email" name="email" autocomplete="email" inputmode="email">
+              <p class="cm-form-hint">Stačí telefon nebo e-mail – podle toho, jak vám to vyhovuje.</p>
+              <p class="cm-form-error" id="err-email"></p>
+            </div>
+            <div class="cm-field">
+              <label for="lead-message">Vaše situace</label>
+              <textarea id="lead-message" name="message" rows="3" placeholder="Např. mám několik půjček a nestíhám splácet…"></textarea>
+              <p class="cm-form-error" id="err-message"></p>
+            </div>
+            <div class="cm-gdpr">
+              <input type="checkbox" id="lead-gdpr" name="gdpr" required>
+              <label for="lead-gdpr">Souhlasím se <a href="/ochrana-osobnich-udaju/">zpracováním osobních údajů</a> za účelem posouzení mé poptávky. <span class="cm-req">*</span></label>
+            </div>
+            <p class="cm-form-error" id="err-gdpr"></p>
+            <button type="submit" class="cm-btn cm-btn--primary cm-btn--block cm-form-submit">Odeslat nezávaznou poptávku</button>
+            <p class="cm-form-status" id="leadStatus" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+
+/* ---------- SESTAVENÍ STRÁNKY ---------- */
+function page({ slug = '', title, desc, main, jsonld = '', extraHead = '', includeCalc = true, includeForm = true }) {
+  const canonical = SITE + (slug ? `/${slug}/` : '/');
+  const scripts = [
+    `<script src="/js/main.js?v=${BUILD}" defer></script>`,
+    includeCalc ? `<script src="/js/calc.js?v=${BUILD}" defer></script>` : '',
+    includeForm ? `<script src="/js/form.js?v=${BUILD}" defer></script>` : '',
+  ].filter(Boolean).join('\n  ');
+
+  return `<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${title}</title>
+  <meta name="description" content="${desc}">
+  <link rel="canonical" href="${canonical}">
+  <meta name="theme-color" content="#0B1E3B">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="${title}">
+  <meta property="og:description" content="${desc}">
+  <meta property="og:url" content="${canonical}">
+  <meta property="og:locale" content="cs_CZ">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/cfg-base.css?v=${BUILD}">
+  <link rel="stylesheet" href="/css/comfortmoney-brand.css?v=${BUILD}">
+  <link rel="stylesheet" href="/css/styles.css?v=${BUILD}">
+  ${jsonld ? `<script type="application/ld+json">${jsonld}</script>` : ''}
+  ${extraHead}
+</head>
+<body>
+  <a class="cm-skip" href="#main">Přeskočit na obsah</a>
+  ${nav()}
+  <main id="main">
+${main}
+  </main>
+  ${footer()}
+  ${fab()}
+  ${cookieBar()}
+  ${scripts}
+</body>
+</html>
+`;
+}
+
+module.exports = { SITE, APPLY_URL, applyBtn, icon, page, consolidationCalc, loanCalc, calcTabs, productCalcCard, calcSection, ceoQuote, faqSection, contactSection };

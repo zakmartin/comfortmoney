@@ -1,0 +1,32 @@
+/* NÁHLEDOVÉ TÉMA – Směr 2 „Lidské světlo“
+   Teplá off-white báze, tmavá borovice na tmavé sekce, terakota + šalvějová zelená.
+   Nadpisy Fraunces. Načítá se až ZA comfortmoney-brand.css. */
+:root {
+  --brand-bg:               #1B2A2A;
+  --brand-bg-rgb:           27, 42, 42;
+  --brand-darker:           #122020;
+  --brand-surface:          #FBF8F3;
+  --brand-accent:           #D2691E;
+  --brand-text-on-dark:     #F3EEE6;
+  --brand-text-on-dark-rgb: 243, 238, 230;
+
+  --cm-cta:          #D2691E;
+  --cm-cta-hover:    #bb5c17;
+  --cm-cta-ink:      #1f1206;
+  --cm-trust:        #4C8A6E;
+  --cm-trust-ink:    #3c6f58;
+  --cm-trust-on-dark:#7FB89C;
+  --cm-ink:          #21302E;
+  --cm-body:         #4a4640;
+  --cm-muted:        #7a7468;
+  --cm-line:         rgba(33, 48, 46, .14);
+  --cm-line-dark:    rgba(243, 238, 230, .18);
+  --cm-grad:         linear-gradient(135deg, #1B2A2A 0%, #243634 60%, #2e4340 100%);
+
+  --bg-white: #FFFFFF;
+  --f-head: 'Fraunces', serif;
+  --f-body: 'Inter', sans-serif;
+  --f-ui:   'Inter', sans-serif;
+  --text-dark: #21302E;
+  --text-body: #4a4640;
+}

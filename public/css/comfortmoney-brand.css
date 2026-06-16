@@ -1,0 +1,46 @@
+/* Comfort Money – brand tokeny (Verze A: moderní flat, oranžová z loga)
+   Chladná světlá neutrální báze, near-black tmavé sekce, živá oranžová akcent.
+   Bez „rámečkového" vzhledu – karty drží jemný stín, ne borders.
+   AA: oranžová #F26A1B = plocha CTA (bílý text) a velký text; text na světlém = tmavší --cm-accent-d. */
+:root {
+  /* přepis brand tokenů z cfg-base.css */
+  --brand-bg:               #15171C;
+  --brand-bg-rgb:           21, 23, 28;
+  --brand-darker:           #0F1115;
+  --brand-surface:          #FFFFFF;
+  --brand-accent:           #F26A1B;
+  --brand-text-on-dark:     #E7E9EE;
+  --brand-text-on-dark-rgb: 231, 233, 238;
+
+  /* ---- paleta (moderní flat) ---- */
+  --cm-bg:        #F4F5F7;   /* chladná světlá báze (ne krémová) */
+  --cm-card:      #FFFFFF;
+  --cm-ink:       #15171C;   /* near-black, chladná */
+  --cm-body:      #565C68;   /* chladná šedá */
+  --cm-muted:     #9BA1AD;
+  --cm-accent:    #F26A1B;   /* živá oranžová (logo) */
+  --cm-accent-d:  #C2510C;   /* tmavší oranžová (text na světlém, AA) */
+  --cm-accent-ink:#ffffff;
+  --cm-sand:      #EEF0F3;   /* neutrální světlá plocha */
+  --cm-sage:      #FFEDE1;   /* světle oranžový tint (ikony, pilulky) */
+  --cm-line:      #E7E9EC;   /* velmi jemná linka (jen kde nutné) */
+  --cm-dark:      #15171C;   /* near-black bandy */
+  --cm-dark-2:    #0F1115;
+  --cm-on-dark:   #E7E9EE;
+  --cm-on-dark-accent:#FF9B5C;
+  --cm-card-shadow: 0 1px 3px rgba(20,22,28,.05), 0 18px 40px -22px rgba(20,22,28,.22);
+  --cm-r:         10px;
+  --cm-r-sm:      8px;
+
+  /* shared tokeny posun */
+  --bg-white:    #ffffff;
+  --text-dark:   #15171C;
+  --text-body:   #565C68;
+  --text-muted:  #9BA1AD;
+  --divider-dark: rgba(20,22,28,.10);
+
+  /* typografie – moderní grotesk */
+  --f-head: 'Schibsted Grotesk', system-ui, sans-serif;
+  --f-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --f-ui:   'Plus Jakarta Sans', system-ui, sans-serif;
+}

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Náhled C – Editorial | Comfort Money</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#f5f4ef; --ink:#15120d; --paper:#fff; --body:#494640; --muted:#8d887e;
+    --accent:#12a150; --accent-d:#0c7d3e; --line:#e2ded3; --dark:#15120d;
+    --f:'Inter',sans-serif; --disp:'Space Grotesk',sans-serif;
+  }
+  body{font-family:var(--f);background:var(--bg);color:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+  h1,h2,h3{color:var(--ink);font-family:var(--disp);line-height:1}
+  .switch{background:var(--dark);color:#fff;font-size:13px;font-weight:600;text-align:center;padding:9px}
+  .switch a{margin:0 8px;opacity:.65;border-bottom:1px solid transparent}
+  .switch a.on,.switch a:hover{opacity:1;border-bottom-color:var(--accent)}
+  .nav{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:2px solid var(--ink)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .nav__logo{height:32px}
+  .nav__menu{display:none;gap:30px}
+  .nav__menu a{font-weight:600;font-size:15px;color:var(--ink)}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--disp);font-weight:700;font-size:16px;padding:15px 28px;border:2px solid var(--ink);cursor:pointer;transition:.15s;border-radius:0}
+  .btn--p{background:var(--ink);color:#fff}
+  .btn--p:hover{background:var(--accent);border-color:var(--accent)}
+  .btn--g{background:transparent;color:var(--ink)}
+  .btn--g:hover{background:var(--ink);color:#fff}
+  /* hero */
+  .hero{padding:64px 0 48px}
+  .tagline{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:600;font-size:14px;letter-spacing:1px;text-transform:uppercase;color:var(--accent-d);margin-bottom:28px}
+  .tagline::before{content:"";width:40px;height:2px;background:var(--accent)}
+  .hero h1{font-size:clamp(52px,11vw,128px);font-weight:700;letter-spacing:-3px;text-transform:uppercase}
+  .hero h1 em{font-style:normal;color:var(--accent);display:inline-block}
+  .hero__row{display:grid;gap:32px;margin-top:36px;align-items:end}
+  .hero__sub{font-size:clamp(18px,2.4vw,22px);max-width:42ch;color:var(--ink);font-weight:500}
+  .hero__cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:24px}
+  /* ticker / trust */
+  .ticker{border-block:2px solid var(--ink);margin-top:56px;display:flex;flex-wrap:wrap}
+  .ticker div{flex:1;min-width:160px;padding:24px 28px;border-left:1px solid var(--line)}
+  .ticker div:first-child{border-left:0}
+  .ticker b{font-family:var(--disp);font-size:34px;font-weight:700;color:var(--ink);display:block}
+  .ticker span{font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+  /* section */
+  section.block{padding:88px 0}
+  .head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:48px;flex-wrap:wrap}
+  h2.title{font-size:clamp(36px,6vw,68px);font-weight:700;letter-spacing:-1.5px;text-transform:uppercase}
+  .lead{font-size:18px;max-width:42ch;color:var(--ink)}
+  /* steps */
+  .steps{display:grid;gap:0;border-top:2px solid var(--ink)}
+  .step{display:grid;grid-template-columns:90px 1fr;gap:28px;padding:34px 0;border-bottom:1px solid var(--line);align-items:baseline}
+  .step__n{font-family:var(--disp);font-size:54px;font-weight:700;color:var(--ink);-webkit-text-stroke:0}
+  .step.is-key .step__n{color:var(--accent)}
+  .step h3{font-size:26px;font-weight:600;margin-bottom:8px;text-transform:none}
+  .step p{font-size:16px;max-width:60ch}
+  .step.is-key{background:var(--ink);color:#cfcabd;margin:0 -28px;padding-inline:28px}
+  .step.is-key h3{color:#fff}
+  /* products */
+  .prods{display:grid;gap:0;border:2px solid var(--ink)}
+  .prod{display:flex;align-items:center;gap:24px;padding:34px 32px;border-bottom:1px solid var(--line);transition:.15s}
+  .prod:last-child{border-bottom:0}
+  .prod:hover{background:var(--ink);color:#fff}
+  .prod:hover h3,.prod:hover .prod__go{color:#fff}
+  .prod:hover .prod__ic{color:var(--accent)}
+  .prod__ic{color:var(--ink);flex-shrink:0}
+  .prod__ic svg{width:38px;height:38px;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .prod h3{font-size:28px;font-weight:600;text-transform:none;margin-bottom:4px}
+  .prod p{font-size:15px}
+  .prod__go{margin-left:auto;font-family:var(--disp);font-size:28px;color:var(--ink);flex-shrink:0}
+  /* cta */
+  .band{background:var(--accent);color:#04160c;padding:72px 56px;text-align:center}
+  .band h2{color:#04160c;font-size:clamp(34px,5vw,60px);text-transform:uppercase;letter-spacing:-1px}
+  .band p{margin:16px auto 30px;max-width:44ch;font-size:18px;font-weight:500;color:#063d20}
+  .band .btn--p{background:var(--ink);border-color:var(--ink)}
+  .band .btn--p:hover{background:#04160c}
+  footer{padding:44px 0;color:var(--muted);font-size:13px;text-align:center}
+  @media(min-width:880px){.nav__menu{display:flex}.hero__row{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr}.prods{}}
+</style>
+</head>
+<body>
+<div class="switch"><span>Náhled verzí:</span> <a href="/nahled-a/">A · Světlá</a> <a href="/nahled-b/">B · Prémiová</a> <a class="on" href="/nahled-c/">C · Editorial</a> <a href="/">Stará verze</a></div>
+
+<header class="nav"><div class="wrap">
+  <img class="nav__logo" src="/assets/logo-comfortmoney.png" alt="Comfort Money">
+  <nav class="nav__menu"><a href="#">Půjčky</a><a href="#">Jak to funguje</a><a href="#">Reference</a><a href="#">O nás</a></nav>
+  <a class="btn btn--p" href="#" style="padding:11px 20px;font-size:14px">Podat žádost</a>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <div class="tagline">Licence ČNB · člen skupiny CFG</div>
+  <h1>Splátka<br>níž až o <em>60&nbsp;%</em></h1>
+  <div class="hero__row">
+    <p class="hero__sub">Sloučíme vaše dluhy do jedné nižší splátky. Pomáháme i lidem, které banka odmítla. Bez nátlaku, férově.</p>
+    <div class="hero__cta">
+      <a class="btn btn--p" href="#">Podat žádost online</a>
+      <a class="btn btn--g" href="#">Konzultace zdarma</a>
+    </div>
+  </div>
+  <div class="ticker">
+    <div><b>od 2012</b><span>na trhu</span></div>
+    <div><b>až 30 let</b><span>splatnost</span></div>
+    <div><b>100k–10M</b><span>výše úvěru (Kč)</span></div>
+    <div><b>ČNB</b><span>pod dohledem</span></div>
+  </div>
+</div></section>
+
+<section class="block"><div class="wrap">
+  <div class="head"><h2 class="title">Jak to funguje</h2><p class="lead">Hledáme řešení, které dlouhodobě unesete. Ne to nejrychlejší.</p></div>
+  <div class="steps">
+    <div class="step"><div class="step__n">01</div><div><h3>Nezávazná poptávka</h3><p>Necháte nám kontakt a pár vět o situaci. Zdarma a bez závazku.</p></div></div>
+    <div class="step is-key"><div class="step__n">02</div><div><h3>Posoudíme a jednáme s věřiteli</h3><p>Projdeme vaše závazky a aktivně jednáme s věřiteli. To běžná nebankovka nedělá.</p></div></div>
+    <div class="step"><div class="step__n">03</div><div><h3>Návrh férového řešení</h3><p>Srozumitelný návrh: splátka, sazba, RPSN i poplatky otevřeně.</p></div></div>
+    <div class="step"><div class="step__n">04</div><div><h3>Jedna nižší splátka</h3><p>Místo více splátek platíte jednu, nižší. Klid a přehled.</p></div></div>
+  </div>
+</div></section>
+
+<section class="block" style="padding-top:0"><div class="wrap">
+  <div class="head"><h2 class="title">Produkty</h2><p class="lead">Tři řešení podle vaší situace. Rovnocenná, jasná.</p></div>
+  <div class="prods">
+    <a class="prod" href="#"><span class="prod__ic"><svg viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg></span><div><h3>Konsolidace závazků</h3><p>Více splátek sloučíme do jedné nižší. Jednáme s věřiteli.</p></div><span class="prod__go">→</span></a>
+    <a class="prod" href="#"><span class="prod__ic"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg></span><div><h3>Zajištěný úvěr</h3><p>100 000 – 10 mil. Kč, splatnost až 30 let.</p></div><span class="prod__go">→</span></a>
+    <a class="prod" href="#"><span class="prod__ic"><svg viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span><div><h3>Podnikatelský úvěr</h3><p>Pro OSVČ a firmy, na které banka nemá čas.</p></div><span class="prod__go">→</span></a>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <h2>Pojďme to vyřešit</h2>
+  <p>Nezávazná konzultace zdarma. Ozveme se a navrhneme další krok.</p>
+  <a class="btn btn--p" href="#">Podat žádost online</a>
+</div></section>
+
+<footer><div class="wrap">Comfort Money s.r.o., člen skupiny CFG · Licence ČNB · Náhled designu C</div></footer>
+</body>
+</html>

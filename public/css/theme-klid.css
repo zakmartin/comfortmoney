@@ -1,0 +1,31 @@
+/* NÁHLEDOVÝ TÉMA – Směr 1 „Klidná jistota“
+   Grafitová modř, zelená jako barva důvěry, oranžová jen na CTA. Nadpisy Red Hat Display.
+   Načítá se až ZA comfortmoney-brand.css, takže přepisuje tokeny. */
+:root {
+  --brand-bg:               #14233A;
+  --brand-bg-rgb:           20, 35, 58;
+  --brand-darker:           #0E1A2B;
+  --brand-surface:          #F4F7FB;
+  --brand-accent:           #E8740C;
+  --brand-text-on-dark:     #E8EEF6;
+  --brand-text-on-dark-rgb: 232, 238, 246;
+
+  --cm-cta:          #E8740C;
+  --cm-cta-hover:    #cf6608;
+  --cm-cta-ink:      #1a1003;
+  --cm-trust:        #1F9D6B;
+  --cm-trust-ink:    #157a52;
+  --cm-trust-on-dark:#3FBE8A;
+  --cm-ink:          #14233A;
+  --cm-body:         #3a4658;
+  --cm-muted:        #667085;
+  --cm-line:         rgba(20, 35, 58, .12);
+  --cm-line-dark:    rgba(232, 238, 246, .16);
+  --cm-grad:         linear-gradient(135deg, #14233A 0%, #1d3350 60%, #264268 100%);
+
+  --f-head: 'Red Hat Display', sans-serif;
+  --f-body: 'Inter', sans-serif;
+  --f-ui:   'Inter', sans-serif;
+  --text-dark: #14233A;
+  --text-body: #3a4658;
+}
