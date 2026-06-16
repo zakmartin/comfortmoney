@@ -206,7 +206,7 @@ const homeMain = `    <section class="cm-hero cm-hero--home" id="kalkulacka">
       </div>
     </section>
 
-    <section class="cm-section" id="jak-to-funguje">
+    <section class="cm-section cm-section--why" id="jak-to-funguje">
       <div class="cm-container">
         <span class="cm-eyebrow">Jak funguje sloučení dluhů</span>
         <h2 class="cm-h2">Sloučení dluhů ve čtyřech krocích</h2>
@@ -215,7 +215,7 @@ const homeMain = `    <section class="cm-hero cm-hero--home" id="kalkulacka">
       </div>
     </section>
 
-    <section class="cm-section" id="reference" style="padding-top:96px;border-top:1px solid var(--cm-line)">
+    <section class="cm-section" id="reference" style="padding-top:96px;border-top:1px solid var(--cm-line);background:#fff">
       <div class="cm-container">
         <span class="cm-eyebrow">Příběhy klientů</span>
         <h2 class="cm-h2">Reálné situace, udržitelná řešení</h2>
@@ -520,7 +520,7 @@ const jakMain = `    <section class="cm-hero cm-hero--page">
         <div class="cm-hero__cta"><a class="cm-btn cm-btn--primary" href="#kontakt">Začít nezávaznou poptávkou</a></div>
       </div>
     </section>
-    <section class="cm-section cm-section--surface"><div class="cm-container"><span class="cm-eyebrow">Sloučení dluhů</span><h2 class="cm-h2">Sloučení dluhů krok po kroku</h2>${steps()}</div></section>
+    <section class="cm-section cm-section--surface cm-section--why"><div class="cm-container"><span class="cm-eyebrow">Sloučení dluhů</span><h2 class="cm-h2">Sloučení dluhů krok po kroku</h2>${steps()}</div></section>
     <section class="cm-section"><div class="cm-container"><span class="cm-eyebrow">Spotřebitelský a podnikatelský úvěr</span><h2 class="cm-h2">Od žádosti k penězům na účtě</h2>${loanSteps()}</div></section>
     <section class="cm-section"><div class="cm-container cm-container--narrow"><span class="cm-eyebrow">Transparentnost</span><h2 class="cm-h2">Co od nás víte předem</h2><p class="cm-lead">Sazbu, RPSN, výši splátky i poplatky (např. za sjednání) ukazujeme otevřeně. Žádné skryté poplatky. Reprezentativní příklad najdete v patičce.</p></div></section>
     ${calcSection()}
