@@ -536,6 +536,36 @@ button {
   padding-block: 56px 40px
 }
 
+/* hero na úvodní stránce vždy zaplní výšku displaye (pod sticky navigací 78px) */
+.cm-hero--home {
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - 78px);
+  min-height: calc(100svh - 78px)
+}
+
+.cm-hero--home>.cm-container {
+  width: 100%
+}
+
+/* desktop: zkompaktnění, aby se celý hero vešel do výšky displaye */
+@media (min-width:860px) {
+  .cm-hero--home {
+    padding-block: 28px
+  }
+}
+
+/* tlačítka v heru jen na mobilu */
+.cm-hero__cta--mobile {
+  margin-top: 24px
+}
+
+@media (min-width:860px) {
+  .cm-hero__cta.cm-hero__cta--mobile {
+    display: none
+  }
+}
+
 .cm-hero__grid {
   display: grid;
   gap: 36px;
@@ -648,7 +678,7 @@ button {
   background: var(--cm-card);
   border: 1px solid var(--cm-line);
   border-radius: var(--cm-r);
-  padding: 28px;
+  padding: 24px;
   box-shadow: var(--cm-card-shadow)
 }
 
@@ -733,6 +763,34 @@ button {
   width: 2px;
   background: var(--cm-line);
   z-index: 0
+}
+
+/* vodorovná timeline – kroky v jedné řadě (desktop) */
+@media (min-width:860px) {
+  .cm-steps--row {
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 24px
+  }
+
+  .cm-steps--row .cm-step {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding-bottom: 0
+  }
+
+  .cm-steps--row .cm-step__content {
+    padding-top: 0
+  }
+
+  .cm-steps--row .cm-step:not(:last-child)::before {
+    left: 64px;
+    right: -24px;
+    top: 31px;
+    bottom: auto;
+    width: auto;
+    height: 2px
+  }
 }
 
 .cm-step__num {
@@ -2387,6 +2445,116 @@ input[type="range"]::-moz-range-thumb {
   background: var(--cm-accent)
 }
 
+/* hero – pás důvěry: lockup licence ČNB + statistika úspory */
+.cm-hero__trust {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 18px 22px;
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid var(--cm-line)
+}
+
+/* desktop: vše na jednom řádku, roztažené po celé šířce sloupce */
+@media (min-width:860px) {
+  .cm-hero__trust {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 20px
+  }
+}
+
+.cm-hero__cnb {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px
+}
+
+/* statistika vedle loga ČNB – stejná forma: popis nahoře, velké číslo dole */
+.cm-hero__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding-left: 20px;
+  border-left: 1px solid var(--cm-line)
+}
+
+.cm-hero__stat-desc {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.3;
+  letter-spacing: .2px;
+  color: var(--cm-ink);
+  max-width: 14ch
+}
+
+.cm-hero__stat-num {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: clamp(28px, 2.6vw, 36px);
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--cm-accent)
+}
+
+.cm-hero__cnb-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: .2px;
+  color: var(--cm-ink)
+}
+
+.cm-hero__cnb-label svg {
+  color: var(--cm-accent-d)
+}
+
+.cm-hero__cnb-logo {
+  height: 40px;
+  width: auto
+}
+
+/* sekce Důvěryhodnost */
+.cm-trust {
+  display: grid;
+  gap: 32px;
+  align-items: center
+}
+
+.cm-trust__intro .cm-h2 {
+  margin-bottom: 12px
+}
+
+.cm-trust__verify {
+  margin-top: 24px
+}
+
+.cm-trust__points {
+  display: grid;
+  gap: 14px
+}
+
+.cm-trust__points li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cm-ink)
+}
+
+@media (min-width:860px) {
+  .cm-trust {
+    grid-template-columns: 1.05fr .95fr;
+    gap: 56px
+  }
+}
+
 /* ============ Sekce „Jak to funguje" – světlejší pozadí + jemný gradientní horní okraj ============ */
 #jak-to-funguje {
   position: relative;
@@ -2417,7 +2585,7 @@ input[type="range"]::-moz-range-thumb {
 .cm-product__actions .cm-btn{flex:1;padding:12px 12px;font-size:15px}
 
 /* ============ Tabová kalkulačka (přepínání produktů) ============ */
-.cm-calctabs__tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--cm-bg);padding:5px;border-radius:10px}
+.cm-calctabs__tabs{display:flex;gap:4px;margin-bottom:16px;background:var(--cm-bg);padding:5px;border-radius:10px}
 .cm-calctabs__tab{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;min-height:46px;border:0;background:transparent;cursor:pointer;font-family:var(--f-body);font-weight:700;font-size:clamp(11.5px,2.2vw,13px);line-height:1.2;color:var(--cm-muted);padding:8px 6px;border-radius:7px;transition:background-color .15s,color .15s,box-shadow .15s}
 .cm-calctabs__tab:hover:not(.is-active){color:var(--cm-ink)}
 .cm-calctabs__tab.is-active{background:#fff;color:var(--cm-ink);box-shadow:0 1px 3px rgba(20,22,28,.16)}
