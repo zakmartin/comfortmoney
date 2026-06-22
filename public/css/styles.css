@@ -933,6 +933,43 @@ button {
   transition-delay: .3s
 }
 
+.cm-steps--timeline .cm-step:nth-child(5) {
+  transition-delay: .4s
+}
+
+/* hromadné odhalení v mřížkách – jemný kaskádový stagger */
+.cm-products>[data-reveal]:nth-child(2),
+.cm-stories>[data-reveal]:nth-child(2),
+.cm-why>[data-reveal]:nth-child(2),
+.cm-faq>[data-reveal]:nth-child(2) {
+  transition-delay: .08s
+}
+
+.cm-products>[data-reveal]:nth-child(3),
+.cm-stories>[data-reveal]:nth-child(3),
+.cm-why>[data-reveal]:nth-child(3),
+.cm-faq>[data-reveal]:nth-child(3) {
+  transition-delay: .16s
+}
+
+.cm-why>[data-reveal]:nth-child(4),
+.cm-faq>[data-reveal]:nth-child(4) {
+  transition-delay: .24s
+}
+
+.cm-faq>[data-reveal]:nth-child(5) {
+  transition-delay: .32s
+}
+
+.cm-faq>[data-reveal]:nth-child(6) {
+  transition-delay: .4s
+}
+
+/* hero: kalkulačka dojede těsně po textu */
+.cm-hero__col-calc[data-reveal] {
+  transition-delay: .12s
+}
+
 @media (prefers-reduced-motion:reduce) {
   [data-reveal] {
     opacity: 1;
