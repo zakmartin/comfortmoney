@@ -548,10 +548,11 @@ button {
   width: 100%
 }
 
-/* desktop: zkompaktnění, aby se celý hero vešel do výšky displaye */
+/* desktop: hero nemusí být přes celou výšku displaye – výška podle obsahu */
 @media (min-width:860px) {
   .cm-hero--home {
-    padding-block: 28px
+    min-height: 0;
+    padding-block: 56px
   }
 }
 
