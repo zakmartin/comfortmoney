@@ -127,10 +127,38 @@
     } else {
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
-          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            if (e.target.hasAttribute('data-celebrate')) { celebrate(e.target); }
+            io.unobserve(e.target);
+          }
         });
       }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
       revealEls.forEach(function (el) { io.observe(el); });
     }
+  }
+
+  /* ---- decentní výtrysk konfet (jednorázově u prvku s [data-celebrate]) ---- */
+  function celebrate(el) {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var anchor = el.querySelector('.cm-step__num') || el;
+    var colors = ['var(--cm-accent)', 'var(--cm-accent-d)', '#F8A05A'];
+    var count = 18;
+    for (var i = 0; i < count; i++) {
+      var p = document.createElement('span');
+      p.className = 'cm-confetti';
+      var angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
+      var dist = 70 + Math.random() * 55;
+      p.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+      p.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+      p.style.setProperty('--rot', Math.round(Math.random() * 220 - 110) + 'deg');
+      p.style.setProperty('--p-color', colors[i % colors.length]);
+      p.style.animationDelay = (Math.random() * 80) + 'ms';
+      anchor.appendChild(p);
+    }
+    setTimeout(function () {
+      var bits = anchor.querySelectorAll('.cm-confetti');
+      for (var j = 0; j < bits.length; j++) { bits[j].remove(); }
+    }, 2000);
   }
 })();

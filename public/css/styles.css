@@ -818,6 +818,45 @@ button {
   border: 1px solid var(--cm-line)
 }
 
+/* krok 4 – decentní oslavný výtrysk konfet kolem čísla (jednorázově při odhalení) */
+.cm-step--celebrate .cm-step__num {
+  overflow: visible
+}
+
+.cm-confetti {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  background: var(--p-color, var(--cm-accent));
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: cm-confetti-pop 1.6s cubic-bezier(.18,.7,.3,1) forwards
+}
+
+@keyframes cm-confetti-pop {
+  0% {
+    transform: translate(-50%, -50%) scale(.4);
+    opacity: 1
+  }
+  70% {
+    opacity: 1
+  }
+  100% {
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1) rotate(var(--rot, 90deg));
+    opacity: 0
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-confetti {
+    display: none
+  }
+}
+
 .cm-step__icon {
   position: absolute;
   right: -4px;
